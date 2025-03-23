@@ -1,17 +1,14 @@
 package org.example.restapiprojectrepository.service;
 
-import aj.org.objectweb.asm.commons.Remapper;
-import jakarta.transaction.Transactional;
+
 import org.example.restapiprojectrepository.model.Media;
 import org.example.restapiprojectrepository.repository.MediaRepository;
-import org.example.restapiprojectrepository.web.dto.MediaRequest;
 import org.example.restapiprojectrepository.web.dto.MediaResponse;
 import org.example.restapiprojectrepository.web.dto.MediaResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +63,7 @@ public class MediaService {
                 Optional<Media> existingMovie = mediaRepository.findByTitle(movie.getTitle());
 
 
-                if (existingMovie.isEmpty() && title.equalsIgnoreCase(movie.getTitle())) {
+                if (existingMovie.isEmpty() ) {
                     Media newMedia = new Media();
                     newMedia.setTitle(movie.getTitle());
                     newMedia.setOverview(movie.getOverview());
@@ -88,5 +85,9 @@ public class MediaService {
 
     public List<Media> returnAllMedia(){
         return mediaRepository.findAll();
+    }
+
+    public List<Media> returnMediaByTitle(String title){
+        return mediaRepository.findAllByTitle(title);
     }
 }

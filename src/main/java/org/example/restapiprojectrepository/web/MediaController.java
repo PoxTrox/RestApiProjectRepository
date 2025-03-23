@@ -4,6 +4,7 @@ package org.example.restapiprojectrepository.web;
 import org.example.restapiprojectrepository.model.Media;
 import org.example.restapiprojectrepository.service.MediaService;
 import org.example.restapiprojectrepository.web.dto.MediaResponse;
+import org.example.restapiprojectrepository.web.mapper.DtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ public class MediaController {
 
         List<MediaResponse> movies = mediaService.searchMovies(title);
 
+
         return ResponseEntity.ok(movies);
     }
 
@@ -44,10 +46,10 @@ public class MediaController {
 
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> saySomething(@RequestParam(name = "name") String name) {
-        return ResponseEntity.ok("WTF JUST Happen " + name);
-    }
+//    @GetMapping("/test")
+//    public ResponseEntity<String> saySomething(@RequestParam(name = "name") String name) {
+//        return ResponseEntity.ok("What JUST Happened " + name);
+//    }
 
     @PostMapping("/title")
     public ResponseEntity<Media> findMediaByTitle(@RequestParam(name = "title") String title,@RequestParam("releaseDate") String releaseDate) {

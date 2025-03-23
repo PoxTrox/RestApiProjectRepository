@@ -18,6 +18,7 @@ public interface MediaRepository extends JpaRepository<Media, UUID> {
 
     Optional<Media> findByTitleAndReleaseDate(String title, String releaseDate);
 
+    List<Media> findAllByTitle(String title);
 
 
 }

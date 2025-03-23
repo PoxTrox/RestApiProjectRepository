@@ -11,7 +11,7 @@ import java.util.UUID;
 public class MediaResponse {
 
     @JsonProperty("id")
-    private Long id;
+    private Long mediaId;
     @JsonProperty("title")
     private String title;
     @JsonProperty("overview")
