@@ -26,7 +26,7 @@ public class Media {
     @Column(columnDefinition = "TEXT")
     private String overview;
 
-    @Column(nullable = false)
+
     private String releaseDate;
 
     private String posterPath;

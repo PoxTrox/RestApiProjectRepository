@@ -4,7 +4,6 @@ package org.example.restapiprojectrepository.web;
 import org.example.restapiprojectrepository.model.Media;
 import org.example.restapiprojectrepository.service.MediaService;
 import org.example.restapiprojectrepository.web.dto.MediaResponse;
-import org.example.restapiprojectrepository.web.mapper.DtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +36,20 @@ public class MediaController {
         return ResponseEntity.ok(movies);
     }
 
+    @GetMapping("/returnAllByTitle")
+    public ResponseEntity<List<MediaResponse>> returnMediaByTitle(@RequestParam(name = "title") String title) {
+        List<Media> mediaList = mediaService.returnMediaByTitle(title);
+
+
+        List<MediaResponse> responseList = mediaList.stream()
+                .map(media -> MediaResponse.builder().title(media.getTitle()).poster_path(media.getPosterPath())
+                        .overview(media.getOverview()).release_date(media.getReleaseDate()).build())
+                .toList();
+
+        return ResponseEntity.ok(responseList);
+
+    }
+
 
     @GetMapping()
     public ResponseEntity<?> saveMovies(@RequestParam(name = "title") String title) {
@@ -58,7 +71,8 @@ public class MediaController {
         return ResponseEntity.status(HttpStatus.OK).body(mediaByTitleAndReleaseDate);
     }
 
-}
+    }
+
 
 
 
