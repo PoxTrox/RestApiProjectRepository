@@ -33,7 +33,7 @@ public class MediaController {
         List<MediaResponse> movies = mediaService.searchMovies(title);
 
 
-        return ResponseEntity.ok(movies);
+        return ResponseEntity.status(HttpStatus.OK).body(movies);
     }
 
     @GetMapping("/returnAllByTitle")
@@ -46,7 +46,7 @@ public class MediaController {
                         .overview(media.getOverview()).release_date(media.getReleaseDate()).build())
                 .toList();
 
-        return ResponseEntity.ok(responseList);
+        return ResponseEntity.status(HttpStatus.OK).body(responseList);
 
     }
 
@@ -68,7 +68,7 @@ public class MediaController {
     public ResponseEntity<Media> findMediaByTitle(@RequestParam(name = "title") String title,@RequestParam("releaseDate") String releaseDate) {
         Media mediaByTitleAndReleaseDate = mediaService.findMediaByTitleAndReleaseDate(title, releaseDate);
 
-        return ResponseEntity.status(HttpStatus.OK).body(mediaByTitleAndReleaseDate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mediaByTitleAndReleaseDate);
     }
 
     }
