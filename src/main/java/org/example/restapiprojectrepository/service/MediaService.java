@@ -1,7 +1,5 @@
 package org.example.restapiprojectrepository.service;
 
-
-import jakarta.transaction.Transactional;
 import org.example.restapiprojectrepository.model.Media;
 import org.example.restapiprojectrepository.repository.MediaRepository;
 import org.example.restapiprojectrepository.web.dto.MediaResponse;
@@ -15,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -65,7 +62,7 @@ public class MediaService {
         for (MediaResponse movie : movies) {
             Optional<Media> existingMovie = mediaRepository.findByTitle(movie.getTitle());
 
-            if (existingMovie.isEmpty()) { // Само ако не съществува, го добавяме
+            if (existingMovie.isEmpty()) {
                 Media newMedia = new Media();
                 newMedia.setTitle(movie.getTitle());
                 newMedia.setOverview(movie.getOverview());
@@ -77,10 +74,10 @@ public class MediaService {
 
         if (!newMovies.isEmpty()) {
             mediaRepository.saveAll(newMovies);
-            mediaRepository.flush(); // Принуждава незабавно записване в базата
+            mediaRepository.flush();
         }
 
-        return Collections.emptyList(); // Връщаме празен списък, ако няма нови записи
+        return Collections.emptyList();
     }
 
     public Media findMediaByTitleAndReleaseDate(String title, String releaseDate) {
