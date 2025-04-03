@@ -59,11 +59,6 @@ public class MediaController {
 
     }
 
-//    @GetMapping("/test")
-//    public ResponseEntity<String> saySomething(@RequestParam(name = "name") String name) {
-//        return ResponseEntity.ok("What JUST Happened " + name);
-//    }
-
     @PostMapping("/title")
     public ResponseEntity<Media> findMediaByTitle(@RequestParam(name = "title") String title,@RequestParam("releaseDate") String releaseDate) {
         Media mediaByTitleAndReleaseDate = mediaService.findMediaByTitleAndReleaseDate(title, releaseDate);

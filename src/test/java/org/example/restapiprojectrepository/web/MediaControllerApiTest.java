@@ -5,6 +5,7 @@ import org.example.restapiprojectrepository.model.Media;
 import org.example.restapiprojectrepository.service.MediaService;
 import org.example.restapiprojectrepository.web.dto.MediaResponse;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -60,11 +61,45 @@ public class MediaControllerApiTest {
         when(mediaService.findMediaByTitleAndReleaseDate(anyString(), anyString())).thenReturn(testMedia);
 
 
-        mockMvc.perform(builder).andExpect(status().isOk())
+        mockMvc.perform(builder).andExpect(status().isCreated())
                 .andExpect(jsonPath("title").value(title))
                 .andExpect(jsonPath("releaseDate").value(releaseDate))
                 .andExpect(jsonPath("overview").value("Test overview"));
 
     }
+
+    @Test
+
+    void tryingToTestSaveMedia() throws Exception {
+
+        MockHttpServletRequestBuilder builder = get("/api/v1/movies").param("title","title");
+
+        when(mediaService.saveMediaToDb("title")).thenReturn(List.of(Media.builder()
+                        .title("title")
+                        .releaseDate("2024-01-01")
+                        .overview("Test overview")
+                .build()));
+
+        mockMvc.perform(builder)
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void tryingToReturnMediaByTitleAndReleaseDate() throws Exception {
+
+        MockHttpServletRequestBuilder builder = get("/api/v1/movies/returnAllByTitle").param("title","title");
+
+        when(mediaService.returnMediaByTitle("title")).thenReturn(List.of(Media.builder()
+                        .title("title")
+                        .posterPath("posterPath")
+                        .overview("overview")
+                        .releaseDate("2024-01-01")
+                .build()));
+        List<Media> mediaList = mediaService.returnMediaByTitle("title");
+
+
+        mockMvc.perform(builder).andExpect(status().isOk());
+    }
+
 
 }

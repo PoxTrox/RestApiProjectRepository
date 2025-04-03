@@ -36,6 +36,7 @@ public class MediaService {
     }
 
 
+
     public List<MediaResponse> searchMovies(String title) {
         String url = "/search/movie?query={title}&api_key={apiKey}";
 
